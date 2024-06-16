@@ -1,0 +1,23 @@
+name: 'Update Media'
+
+on:
+  workflow_dispatch: 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Build Media
+      uses: swthemathwiz/openscad-actions/build@v1
+      with:
+        target: 'all icons images'
+        use_xvfb: true
+
+    - name: Update Media
+      uses: swthemathwiz/openscad-actions/update-media-artifacts@v1
+      with:
+        message: 'Update media'
+        files: 'png stl'
+        media_branch: 'media'
+        media_subdirectory: 'media'
