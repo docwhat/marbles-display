@@ -26,9 +26,9 @@ ICONS = $(SRCS:.scad=.icon.png)
 DEPDIR := .deps
 DEPFLAGS = -d $(DEPDIR)/$*.d
 
-COMPILE.scad := $(OPENSCAD) -o $@ $(DEPFLAGS)
-RENDER.scad := $(OPENSCAD) -o $@ --render --colorscheme=Tomorrow
-RENDERICON.scad := $(RENDER.scad) --imgsize=256,256
+COMPILE.scad = $(OPENSCAD) -o $@ $(DEPFLAGS)
+RENDER.scad = $(OPENSCAD) -o $@ --render --colorscheme=Tomorrow
+RENDERICON.scad = $(RENDER.scad) --imgsize=256,256
 
 .PHONY: all images icons clean distclean
 
