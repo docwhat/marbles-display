@@ -13,6 +13,7 @@ jobs:
       with:
         target: 'all icons images'
         use_xvfb: true
+        extra_packages: pngcrush
 
     - name: Update Media
       uses: swthemathwiz/openscad-actions/update-media-artifacts@v1
