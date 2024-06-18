@@ -14,6 +14,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Make directory
+        run: mkdir -p ./gallery
+
       - name: Create gallery
         uses: eXpire163/openscad-actions@main
         with:
