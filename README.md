@@ -6,7 +6,7 @@ This is a project to create a 3D printable display for them.
 
 ## Marbles
 
-Each sphere is 1-inch (2.54 cm) for a total volume of 4.1887 cubic inches (68.64 cm<sup>3</sup>).
+Each sphere is 1-inch (2.54 cm) for a total volume of 4.1887 cubic inches (68.64 cm³).
 
 ### Aluminum
 
@@ -14,8 +14,8 @@ Elemental [Aluminum](https://en.wikipedia.org/wiki/Aluminium).
 
 - Symbol: Al
 - Atomic Number: 13
-- Density: 	2.699 g/cm<sup>3</sup>
-- Mass:
+- Density: 2.699 g/cm³
+- Mass: 185.25936 g
 
 ### Titanium
 
@@ -23,8 +23,7 @@ Elemental [Titanium](https://en.wikipedia.org/wiki/Titanium).
 
 - Symbol: Ti
 - Atomic Number: 22
-- Density: 4.502 g/cm<sup>3</sup>
-
+- Density: 4.502 g/cm³
 
 - Mass:
 
@@ -34,7 +33,7 @@ Elemental [Neodymium](https://en.wikipedia.org/wiki/Neodymium).
 
 - Symbol: Nd
 - Atomic Number: 60
-- Density: 7.007 g/cm<sup>3</sup>
+- Density: 7.007 g/cm³
 - Mass:
 
 ### Steel (chromed)
@@ -50,7 +49,7 @@ Elemental [Tungten](https://en.wikipedia.org/wiki/Tungsten).
 
 - Symbol: W
 - Atomic Number: 74
-- Density: 	19.254 g/cm<sup>3</sup>
+- Density: 19.254 g/cm³
 - Mass:
 
 ### Nylon
@@ -64,7 +63,6 @@ Elemental [Tungten](https://en.wikipedia.org/wiki/Tungsten).
 
 [Zirconium dioxide](https://en.wikipedia.org/wiki/Zirconium_dioxide) is a white
 crystalline oxide of [zirconium](https://en.wikipedia.org/wiki/Zirconium).
-
 
 - Density:
 - Mass:
@@ -80,11 +78,10 @@ crystalline oxide of [zirconium](https://en.wikipedia.org/wiki/Zirconium).
 
 - Symbol: Cu
 - Atomic Number: 29
-- Density: 8.935 g/cm<sup>3</sup>
+- Density: 8.935 g/cm³
 
 #### Zinc
 
 - Symbol: Zn
-- Atomic Number:  30
-- Density: 7.140 g/cm<sup>3</sup>
-
+- Atomic Number: 30
+- Density: 7.140 g/cm³
