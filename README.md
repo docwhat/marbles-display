@@ -1,3 +1,5 @@
+[![Update Gallery](https://github.com/docwhat/marbles-display/actions/workflows/openscad.yaml/badge.svg)](https://github.com/docwhat/marbles-display/actions/workflows/openscad.yaml)
+
 # Marbles Display
 
 I own a bunch of 1-inch spheres of various materials.
