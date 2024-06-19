@@ -19,12 +19,25 @@ jobs:
       - name: Make directory
         run: mkdir -p ./gallery
 
+      - name: Copy .scad files
+        run: cp -v *.scad ./gallery/
+
+      - name: Create .stl files
+        uses: eXpire163/openscad-actions@main
+        with:
+          scad_file: ./gallery
+          output_file: ./gallery
+          target_format_for_bulk: stl
+
       - name: Create gallery
         uses: eXpire163/openscad-actions@main
         with:
-          scad_file: ./
+          scad_file: ./gallery
           output_file: ./gallery
           target_format_for_bulk: png
+
+      - name: Remove copied .scad files
+        run: rm -v ./gallery/*.scad
 
       - uses: EndBug/add-and-commit@v9
         with:
