@@ -1,0 +1,308 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC2310
+
+set -euo pipefail
+
+root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+readonly root
+
+# Using the 8 color colors for maximum compatability.
+red=$'\033[0;31m'
+green=$'\033[0;32m'
+yellow=$'\033[0;33m'
+cyan=$'\033[0;36m'
+grey=$'\033[0;90m'
+readonly red green yellow cyan grey
+
+bold=$'\033[1m'
+reset=$'\033[0m'
+readonly bold reset
+
+readonly checkmark="${green}✔${reset}"
+readonly crossmark="${red}✘${reset}"
+
+failure=0
+success=0
+auto_fixable=0
+say_yes=0
+declare -a packages=()
+
+has() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+success() {
+  printf "%s %s%s%s\n" \
+    "${checkmark}" "${green}${bold}" "$1" "${reset}"
+  success=$((success + 1))
+}
+
+failure() {
+  printf "%s %s%s%s\n" \
+    "${crossmark}" "${red}${bold}" "$1" "${reset}"
+  failure=$((failure + 1))
+}
+
+instructions() {
+  printf "  %s%s%s\n" "${yellow}${bold}" "$1" "${reset}"
+}
+
+add_pkg() {
+  packages=("${packages[@]:+${packages[@]}}" "$@")
+  auto_fixable=$((auto_fixable + 1))
+}
+
+make_install_command() {
+  local variable=$1
+  local prefix=$2
+  shift 2
+
+  printf -v "${variable}" -- ' %q' "$@"
+  printf -v "${variable}" -- '%s%s' "${prefix}" "${!variable}"
+}
+
+ask_yn() {
+  local prompt yn
+
+  if ((say_yes)); then
+    return 0
+  fi
+
+  # shellcheck disable=SC2059
+  printf -v prompt "$@"
+
+  while true; do
+    read -rp "${prompt}${reset} [y/n] " yn
+    case "${yn}" in
+    [Yy]*) return 0 ;;
+    [Nn]*) return 1 ;;
+    *) printf "%sPlease answer y or n.%s\n" "${yellow}" "${reset}" ;;
+    esac
+  done
+}
+
+declare _os='' # memoize OS
+# os tries to detect the Operating System.
+os() {
+  if [[ -z ${_os} ]]; then
+    case "$(uname -s)" in
+    Darwin) _os="macos" ;;
+    Linux)
+      if [[ -f /etc/os-release ]]; then
+        _os=$(sh -c '. /etc/os-release; printf "%s" "${ID}"')
+      else
+        echo _os="linux"
+      fi
+      ;;
+    *) _os="unknown" ;;
+    esac
+  fi
+  printf "%s" "${_os}"
+}
+
+show-help() {
+  cat <<HELP
+Usage: ${0##*/} [OPTION]
+
+Options:
+  -h, --help  Display this help and exit
+  -y, --yes   Assume yes to all questions
+HELP
+}
+
+while (($# > 0)); do
+  case $1 in
+  -h | --help)
+    show-help
+    exit
+    ;;
+  -y | --yes) say_yes=1 ;;
+  -*)
+    printf "Unknown option: %s\n" "$1"
+    show-help
+    exit 1
+    ;;
+  *)
+    printf "Unknown argument: %s\n" "$1"
+    show-help
+    exit 1
+    ;;
+  esac
+  shift
+done
+
+## OpenSCAD
+############################################################
+if has openscad; then
+  success "openscad is installed"
+else
+  failure "missing openscad"
+  instructions "Please install OpenSCAD."
+  case "$(os)" in
+  ubuntu | debian)
+    instructions "  sudo apt-get install openscad"
+    add_pkg openscad
+    ;;
+  fedora)
+    instructions "  sudo dnf install openscad"
+    add_pkg openscad
+    ;;
+  macos)
+    instructions "  brew install --cask openscad"
+    add_pkg openscad
+    ;;
+  *) ;;
+  esac
+fi
+
+## Curl
+############################################################
+if has curl; then
+  success "curl is installed"
+else
+  failure "missing curl"
+  instructions "Please install Curl."
+  case "$(os)" in
+  ubuntu | debian)
+    instructions "  sudo apt-get install curl ca-certificates"
+    add_pkg curl ca-certificates
+    ;;
+  fedora)
+    instructions "  sudo dnf install curl"
+    add_pkg curl
+    ;;
+  alpine)
+    instructions "  sudo apk add curl ca-certificates"
+    add_pkg curl ca-certificates
+    ;;
+  macos)
+    instructions "  brew install curl"
+    add_pkg curl
+    ;;
+  *) ;;
+  esac
+fi
+
+## PNG Crush
+############################################################
+if has pngcrush; then
+  success "pngcrush is installed"
+else
+  failure "missing pngcrush"
+  instructions "Please install PNG Crush."
+  case "$(os)" in
+  ubuntu | debian)
+    instructions "  sudo apt-get install pngcrush"
+    add_pkg pngcrush
+    ;;
+  fedora)
+    instructions "  sudo dnf install pngcrush"
+    add_pkg pngcrush
+    ;;
+  alpine)
+    instructions "  sudo apk add pngcrush"
+    add_pkg pngcrush
+    ;;
+  macos)
+    instructions "  brew install pngcrush"
+    add_pkg pngcrush
+    ;;
+  *) ;;
+  esac
+fi
+
+## GNU Make
+############################################################
+if has make && [[ "$(make --version)" == *GNU\ Make* ]]; then
+  success "GNU Make is installed"
+else
+  failure "missing GNU Make"
+  instructions "Please install GNU Make."
+  case "$(os)" in
+  ubuntu | debian)
+    instructions "  sudo apt-get install make"
+    add_pkg make
+    ;;
+  fedora)
+    instructions "  sudo dnf install make"
+    add_pkg make
+    ;;
+  alpine)
+    instructions "  sudo apk add make"
+    add_pkg make
+    ;;
+  macos)
+    instructions "  brew install make"
+    add_pkg make
+    ;;
+  *) ;;
+  esac
+fi
+
+## Trunk.IO
+############################################################
+if [[ "$(os)" == "alpine" ]]; then
+  printf "\n%sTrunk does not support Alpine.%s\n" "${red}" "${reset}"
+else
+  printf '\n%sInstalling Trunk%s\n' "${bold}" "${reset}"
+  trunk_args=(install)
+  if [[ -n ${CI-} ]]; then
+    trunk_args+=(--no-progress)
+  fi
+  if "${root}/script/trunk" "${trunk_args[@]}"; then
+    success "trunk is installed"
+  else
+    failure "unable to install trunk"
+  fi
+fi
+
+printf '\nsuccesss: %s%d%s  failures: %s%d%s\n' "${green}" "${success}" "${reset}" "${red}" "${failure}" "${reset}"
+
+if ((failure > 0)); then
+  printf '\n%sBootstrap failed!%s\n' "${red}" "${reset}"
+
+  if (($(id -u) == 0)); then
+    sudo=""
+  else
+    sudo="sudo "
+  fi
+
+  if ((${#packages[@]} > 0)); then
+    case "$(os)" in
+    ubuntu | debian)
+      make_install_command "install_command" "${sudo}apt-get install --yes --no-install-recommends --no-install-suggests" "${packages[@]}"
+      ;;
+    fedora)
+      make_install_command "install_command" "${sudo}dnf install --assumeyes" "${packages[@]}"
+      ;;
+    alpine)
+      make_install_command "install_command" "${sudo}apk add" "${packages[@]}"
+      ;;
+    macos)
+      make_install_command "install_command" "brew install" "${packages[@]}"
+      ;;
+    *) ;;
+    esac
+
+    if [[ -n ${install_command-} ]]; then
+      if ask_yn "This will install your missing commands:\n    %s\nWould you like me run this for you?" "${yellow}${install_command}${reset}"; then
+        printf "\n%s %s\n" "${cyan}+${reset}" "${grey}${install_command}${reset}"
+        eval "${install_command}" || :
+        if ((auto_fixable == failure)); then
+          exit 0
+        fi
+
+        instructions "  Run this script again."
+      else
+        instructions "  Please install the missing commands and run this script again."
+      fi
+    fi
+  fi
+  exit 1
+else
+  printf '\n%sSuccess! 🎉%s\n' "${green}" "${reset}"
+  printf '\nThis script is safe to run multiple times.\n'
+  exit 0
+fi
+
+# EOF
