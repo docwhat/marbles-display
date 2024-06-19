@@ -37,7 +37,7 @@ jobs:
           target_format_for_bulk: png
 
       - name: Repair README
-        run: perl -pi -e 's!\.scad[\])]!.stl)!g; s!\(\./gallery/!(!g;' gallery/README.md
+        run: perl -pi -e 's!\.scad([\])])!.stl\1!g; s!\(\./gallery/!(!g;' gallery/README.md
 
       - name: Remove copied .scad files
         run: rm -v ./gallery/*.scad
