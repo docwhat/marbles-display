@@ -289,6 +289,8 @@ if ((failure > 0)); then
         printf "\n%s %s\n" "${cyan}+${reset}" "${grey}${install_command}${reset}"
         eval "${install_command}" || :
         if ((auto_fixable == failure)); then
+          printf '\n%sAll good!\n' "${green}" "${reset}"
+          printf '\nThis script is safe to run multiple times.\n'
           exit 0
         fi
 
