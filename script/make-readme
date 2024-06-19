@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
+readonly root
+
+app() {
+  cd "${root}/gallery"
+
+  printf "# Gallery\n\n"
+  printf "| Model | STL | SCAD |\n"
+  printf "|-------|-----|------|\n"
+  for scad in *.scad; do
+    name=$(basename "${scad%.scad}")
+    stl=${scad%.scad}.stl
+    image=${scad%.scad}.png
+    icon=${scad%.scad}.icon.png
+
+    [[ -f $stl ]] || continue
+    [[ -f $image ]] || continue
+    [[ -f $icon ]] || continue
+
+    # shellcheck disable=SC2016
+    printf '| [![%s](%s)](%s) | [`%s`](%s) | [`%s`](%s) |\n' \
+      "$name" "$icon" "$image" \
+      "$stl" "$stl" \
+      "$scad" "$scad"
+  done
+}
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  app
+fi

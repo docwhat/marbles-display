@@ -47,7 +47,7 @@ Made of [Iron](https://en.wikipedia.org/wiki/Iron) and [Carbon](https://en.wikip
 
 ### Tungsten
 
-Elemental [Tungten](https://en.wikipedia.org/wiki/Tungsten).
+Elemental [Tungsten](https://en.wikipedia.org/wiki/Tungsten).
 
 - Symbol: W
 - Atomic Number: 74

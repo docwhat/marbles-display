@@ -1,2 +1,4 @@
 .deps/
 tmp/
+
+*.unoptimized.png
