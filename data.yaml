@@ -2,41 +2,54 @@ elements:
   - name: Aluminum
     symbol: Al
     number: 13
-    density: 2.699 g/cm³
-    mass: 185.25936 g
+    density: 2.564 g/cm³
+    "expected density": 2.699 g/cm³
+    mass: 22 g
 
   - name: Titanium
     symbol: Ti
     number: 22
-    density: 4.502 g/cm³
-    mass:
+    density: 4.312 g/cm³
+    "expected density": 4.502 g/cm³
+    mass: 37 g
 
   - name: Neodymium
     symbol: Nd
     number: 60
-    density: 7.007 g/cm³
-    mass:
+    density: 4.778 g/cm³
+    "expected density": 7.007 g/cm³
+    mass: 41 g
 
   - name: Tungsten
     symbol: W
     number: 74
-    density: 19.254 g/cm³
-    mass:
+    density: 17.016 g/cm³
+    "expected density": 19.254 g/cm³
+    mass: 146 g
 
 non-elements:
   - name: Steel
-    density: g/cm³
-    mass:
+    density: 7.809 g/cm³
+    mass: 67 g
 
   - name: Nylon
-    density: g/cm³
-    mass:
+    density: 1.049 g/cm³
+    mass: 9 g
 
   - name: Zirconia
-    density: g/cm³
-    mass:
-
+    density: 6.06 g/cm³
+    mass: 52 g
+ 
   - name: Brass
-    density: g/cm³
-    mass:
+    density: 8.042 g/cm³
+    mass: 69 g
+
+  - name: Glass
+    density: 2.331 g/cm³
+    mass: 20 g
+
+other:
+  - name: volume of a marble
+    value: 8.58 cm³
+    
 # EOF
