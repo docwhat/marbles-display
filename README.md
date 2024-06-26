@@ -79,18 +79,6 @@ crystalline oxide of [zirconium](https://en.wikipedia.org/wiki/Zirconium).
 - Density: 8.022 g/cm³
 - Mass: 68.83 g
 
-#### Copper
-
-- Symbol: Cu
-- Atomic Number: 29
-- Density: 8.935 g/cm³
-
-#### Zinc
-
-- Symbol: Zn
-- Atomic Number: 30
-- Density: 7.140 g/cm³
-
 ## Glass
 
 This [Glass](https://en.wikipedia.org/wiki/Glass) marble is probably [Silicon dioxide](https://en.wikipedia.org/wiki/Silicon_dioxide).
