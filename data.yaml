@@ -1,55 +1,56 @@
+# mass is in grams (g).
+# density is in grams per cubic centemeter (g/cm³).
+# The diameter of a 1" marble is 2.54 cm.
+# 1/2" is 1.27 cm.
+# volume of a 1" marble is 8.58 cubic centemeters (cm³).
+
 elements:
   - name: Aluminum
     symbol: Al
     number: 13
-    density: 2.564 g/cm³
-    "expected density": 2.699 g/cm³
-    mass: 22 g
+    density: 2.634
+    "elemental density": 2.699
+    mass: 22.60
 
   - name: Titanium
     symbol: Ti
     number: 22
-    density: 4.312 g/cm³
-    "expected density": 4.502 g/cm³
-    mass: 37 g
+    density: 4.3355
+    "elemental density": 4.502
+    mass: 37.20
 
   - name: Neodymium
     symbol: Nd
     number: 60
-    density: 4.778 g/cm³
-    "expected density": 7.007 g/cm³
-    mass: 41 g
+    density: 4.724
+    "elemental density": 7.007
+    mass: 40.53
 
   - name: Tungsten
     symbol: W
     number: 74
-    density: 17.016 g/cm³
-    "expected density": 19.254 g/cm³
-    mass: 146 g
+    density: 17.016
+    "elemental density": 19.254
+    mass: 146
 
 non-elements:
   - name: Steel
-    density: 7.809 g/cm³
-    mass: 67 g
+    density: 7.793
+    mass: 66.87
 
   - name: Nylon
-    density: 1.049 g/cm³
-    mass: 9 g
+    density: 1.134
+    mass: 9.73
 
   - name: Zirconia
-    density: 6.06 g/cm³
-    mass: 52 g
- 
+    density: 6.077
+    mass: 52.14
+
   - name: Brass
-    density: 8.042 g/cm³
-    mass: 69 g
+    density: 8.022
+    mass: 68.83
 
   - name: Glass
-    density: 2.331 g/cm³
-    mass: 20 g
-
-other:
-  - name: volume of a marble
-    value: 8.58 cm³
-    
+    density: 2.288
+    mass: 19.63
 # EOF
