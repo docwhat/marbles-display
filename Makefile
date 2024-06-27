@@ -1,35 +1,36 @@
 # Makefile for building a gallery for easy viewing.
 
 GALLERY := gallery
-SRCS := $(filter-out $(GALLERY)/%,$(wildcard *.scad))
 
 # Target the gallery directory
-SCADS   := $(addprefix $(GALLERY)/, $(notdir $(SRCS)))
-STLS    := $(SCADS:.scad=.stl)
-IMAGES  := $(SCADS:.scad=.png)
-ICONS   := $(SCADS:.scad=.icon.png)
-README  := $(GALLERY)/README.md
+SCADS   = 
+STLS    = $(SCADS:.scad=.stl)
+ICONS   = $(SCADS:.scad=.icon.gif)
+README  = $(GALLERY)/README.md
+DEPENDENCY_FILE := .dependency.mk
 
 .PHONY : all
-all : stls images icons readme
+all : deps scads stls images icons readme
+
+-include $(DEPENDENCY_FILE)
 
 .PHONY : debug
 debug :
-	@printf -- "SRCS :   $(SRCS)\n"
-	@printf -- "------------------------------\n"
 	@printf -- "SCADS :  $(SCADS)\n"
 	@printf -- "STLS :   $(STLS)\n"
-	@printf -- "IMAGES : $(IMAGES)\n"
 	@printf -- "ICONS :  $(ICONS)\n"
 
+.PHONY : deps
+deps: $(DEPENDENCY_FILE)
+
 .PHONY : gallery
-gallery : $(SCADS) $(STLS) $(IMAGES) $(ICONS) $(README)
+gallery : $(SCADS) $(STLS) $(ICONS) $(README)
+
+.PHONY: scads
+scads : $(SCADS)
 
 .PHONY : stls
 stls : $(STLS)
-
-.PHONY : images
-images : $(IMAGES)
 
 .PHONY : icons
 icons : $(ICONS)
@@ -37,32 +38,26 @@ icons : $(ICONS)
 .PHONY : readme
 readme : $(GALLERY)/README.md
 
-$(SCADS) $(STLS) $(IMAGES) $(ICONS) : $(GALLERY)/.gitignore
+$(DEPENDENCY_FILE) : data.yaml Makefile script/make-deps
+	script/make-deps > $@
+
+$(SCADS) $(STLS) $(ICONS) : $(GALLERY)/.gitignore $(DEPENDENCY_FILE)
 
 $(GALLERY)/.gitignore :
 	mkdir -p $(GALLERY)
 	touch $(GALLERY)/.gitignore
 
-$(GALLERY)/%.scad : %.scad
-	cp $< $@
-
 $(GALLERY)/%.stl : $(GALLERY)/%.scad
 	openscad $< -o $@
 
-$(GALLERY)/%.unoptimized.png : $(GALLERY)/%.scad
-	openscad $< --render --colorscheme=Tomorrow -o $@ 
+$(GALLERY)/%.icon.gif : $(GALLERY)/%.scad
+	script/openscad-animate $<
 
-$(GALLERY)/%.icon.unoptimized.png : $(GALLERY)/%.scad
-	openscad $< --imgsize=256,256 --render --colorscheme=Tomorrow -o $@
-
-$(GALLERY)/%.png : $(GALLERY)/%.unoptimized.png
-	pngcrush -q -brute $< $@ || mv $< $@
-
-$(README) : script/make-readme $(GALLERY)/.gitignore $(SRCS) $(STLS) $(IMAGES) $(ICONS)
+$(README) : script/make-readme $(GALLERY)/.gitignore $(SCADS) $(STLS) $(ICONS) $(DEPENDENCY_FILE)
 	script/make-readme > $@
 
 .PHONY : clean
 clean :
-	rm -f $(STLS) $(IMAGES) $(ICONS)
+	rm -f $(SCADS) $(STLS) $(ICONS) $(DEPENDENCY_FILE) $(README)
 
 # EOF

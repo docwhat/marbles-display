@@ -14,16 +14,14 @@ app() {
   for scad in *.scad; do
     name=$(basename "${scad%.scad}")
     stl=${scad%.scad}.stl
-    image=${scad%.scad}.png
-    icon=${scad%.scad}.icon.png
+    icon=${scad%.scad}.icon.gif
 
     [[ -f $stl ]] || continue
-    [[ -f $image ]] || continue
     [[ -f $icon ]] || continue
 
     # shellcheck disable=SC2016
-    printf '| [![%s](%s)](%s) | [`%s`](%s) | [`%s`](%s) |\n' \
-      "$name" "$icon" "$image" \
+    printf '| ![%s](%s) | [`%s`](%s) | [`%s`](%s) |\n' \
+      "$name" "$icon" \
       "$stl" "$stl" \
       "$scad" "$scad"
   done
@@ -32,3 +30,5 @@ app() {
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
   app
 fi
+
+# EOF
