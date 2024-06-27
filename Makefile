@@ -10,7 +10,7 @@ README  = $(GALLERY)/README.md
 DEPENDENCY_FILE := .dependency.mk
 
 .PHONY : all
-all : deps scads stls images icons readme
+all : deps scads stls icons readme
 
 -include $(DEPENDENCY_FILE)
 
