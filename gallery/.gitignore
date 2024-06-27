@@ -1,0 +1,6 @@
+# Just in case...
+!*.stl
+!*.scad
+!*.png
+!*.gif
+!README.md
