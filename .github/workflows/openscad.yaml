@@ -6,6 +6,8 @@ on:
     paths:
       - "**.scad"
       - ".github/workflows/openscad.yaml"
+      - "Makefile"
+      - "script/make-*"
 
 jobs:
   build:

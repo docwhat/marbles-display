@@ -51,7 +51,7 @@ $(GALLERY)/%.stl : $(GALLERY)/%.scad
 	openscad $< -o $@
 
 $(GALLERY)/%.icon.gif : $(GALLERY)/%.scad
-	script/openscad-animate $<
+	script/make-animation $<
 
 $(README) : script/make-readme $(GALLERY)/.gitignore $(SCADS) $(STLS) $(ICONS) $(DEPENDENCY_FILE)
 	script/make-readme > $@
