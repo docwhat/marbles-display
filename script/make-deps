@@ -46,7 +46,7 @@ for Element in "${elements[@]}"; do
   new_scad="${element}-base.scad"
 
   scads=("${scads[@]:+"${scads[@]}"}" '$(GALLERY)/'"${new_scad}")
-  printf '$(GALLERY)/%s: %s\n' \
+  printf '$(GALLERY)/%s: %s data.yaml\n' \
     "${new_scad}" "${template_scad}"
   printf '\tperl -p -e '"'"'s!^(\\s+)(non_element|element)\\([^)]+\\);?!\\1%s!;'"'"' $< > $@' \
     "$(mk_element_call "$Element")"

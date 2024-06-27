@@ -25,24 +25,41 @@ for i in $(seq 1 "${num_frames}"); do
   cameras+=("${translate},${rot},${dist}")
 done
 
-parallel \
-  --bar \
-  --jobs '85%' \
-  nice \
-  openscad \
+openscad_args=(
+  nice
+  openscad
+  "${scad}"
+  "--quiet"
+  "--o={1}"
+  "--imgsize=$size"
+  "--export-format=png"
+  "--colorscheme=Tomorrow"
+  "--camera={2}"
+)
+
+# Check if it supports fast-csg.
+if openscad \
   "${scad}" \
   "--quiet" \
   "--enable=fast-csg" \
-  "--o={1}" \
-  "--imgsize=$size" \
-  "--render" \
-  "--colorscheme=Tomorrow" \
-  "--camera={2}" \
+  "--o=/dev/null" \
+  "--export-format=png" \
+  "--imgsize=1,1"; then
+  printf 'INFO: Using fast-csg.\n'
+  openscad_args+=("--enable=fast-csg")
+else
+  printf 'WARN: fast-csg is not supported. This will be slow.\n'
+fi
+
+# Run it!
+parallel \
+  --bar \
+  --jobs '85%' \
+  "${openscad_args[@]}" \
   ::: "${filenames[@]}" \
   :::+ "${cameras[@]}"
 
-magick \
-  convert \
+convert \
   "${tempdir}/frame_*.png" \
   -set delay 1x15 \
   "${scad/%.scad/.gif}"

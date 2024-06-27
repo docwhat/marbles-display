@@ -5,3 +5,8 @@ tmp/
 
 # Dependency files.
 .*.mk
+
+# Temp files
+*.gif
+!gallery/*.gif
+

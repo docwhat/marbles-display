@@ -5,7 +5,7 @@ GALLERY := gallery
 # Target the gallery directory
 SCADS   = 
 STLS    = $(SCADS:.scad=.stl)
-ICONS   = $(SCADS:.scad=.icon.gif)
+ICONS   = $(SCADS:.scad=.gif)
 README  = $(GALLERY)/README.md
 DEPENDENCY_FILE := .dependency.mk
 
@@ -48,9 +48,9 @@ $(GALLERY)/.gitignore :
 	touch $(GALLERY)/.gitignore
 
 $(GALLERY)/%.stl : $(GALLERY)/%.scad
-	openscad $< -o $@
+	openscad --quiet $< -o $@
 
-$(GALLERY)/%.icon.gif : $(GALLERY)/%.scad
+$(GALLERY)/%.gif : $(GALLERY)/%.scad
 	script/make-animation $<
 
 $(README) : script/make-readme $(GALLERY)/.gitignore $(SCADS) $(STLS) $(ICONS) $(DEPENDENCY_FILE)

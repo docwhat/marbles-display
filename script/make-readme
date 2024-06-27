@@ -14,7 +14,7 @@ app() {
   for scad in *.scad; do
     name=$(basename "${scad%.scad}")
     stl=${scad%.scad}.stl
-    icon=${scad%.scad}.icon.gif
+    icon=${scad%.scad}.gif
 
     [[ -f $stl ]] || continue
     [[ -f $icon ]] || continue
