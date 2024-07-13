@@ -30,16 +30,6 @@ Elemental [Titanium](https://en.wikipedia.org/wiki/Titanium).
 - Density if pure: 4.502 g/cm³
 - Mass: 37.20 g
 
-### Neodymium
-
-Elemental [Neodymium](https://en.wikipedia.org/wiki/Neodymium).
-
-- Symbol: Nd
-- Atomic Number: 60
-- Actual Density: 4.724 g/cm³
-- Density if pure: 7.007 g/cm³
-- Mass: 40.53 g
-
 ### Tungsten
 
 Elemental [Tungsten](https://en.wikipedia.org/wiki/Tungsten).
@@ -49,6 +39,14 @@ Elemental [Tungsten](https://en.wikipedia.org/wiki/Tungsten).
 - Actual Density: 17.016 g/cm³
 - Density if pure: 19.254 g/cm³
 - Mass: 146 g
+
+### Hematite
+
+[Hematite](https://en.wikipedia.org/wiki/Hematite) AKA Ferric Oxide (Fe₂O₃).
+
+- Actual Density: 4.724 g/cm³
+- Hematite Density: 5.250 g/cm³
+- Mass: 40.53 g
 
 ### Steel (chromed)
 
