@@ -18,14 +18,7 @@ elements:
     density: 4.3355
     "elemental density": 4.502
     mass: 37.20
-
-  - name: Neodymium
-    symbol: Nd
-    number: 60
-    density: 4.724
-    "elemental density": 7.007
-    mass: 40.53
-
+    
   - name: Tungsten
     symbol: W
     number: 74
@@ -34,6 +27,12 @@ elements:
     mass: 146
 
 non-elements:
+  - name: Hematite
+    description: "Ferric Oxide (Fe₂O₃)"
+    density: 4.724
+    "hematite density": 5.250
+    mass: 40.53
+
   - name: Steel
     density: 7.793
     mass: 66.87
